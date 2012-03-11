@@ -1,0 +1,12 @@
+{
+	"version": "0.0.1",
+	"name": "socket.osc",
+	"dependencies": {
+		"omgosc": "0.1.0",
+		"socket.io": "0.9.0"
+	},
+	"bin": {
+		"socket.osc": "./bin/socketosc"
+	},
+	"main": "./lib/socketosc"
+}
