@@ -1,8 +1,0 @@
-#!/usr/bin/env node
-
-var io_port = parseInt(process.argv[2]) || 8080,
-	osc_port = parseInt(process.argv[3]) || 8000,
-	io = require('socket.io').listen(io_port),
-    osc = require(__dirname + '/../lib/socketosc.js');
-
-osc.listen(io, osc_port);

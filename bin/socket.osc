@@ -1,0 +1,17 @@
+#!/usr/bin/env node
+
+var http_port = parseInt(process.argv[2]) || 8080,
+	inbound_osc_port = parseInt(process.argv[3]) || 8000,
+	outbound_osc_port = parseInt(process.argv[4]),
+	outbound_osc_host = process.argv[5],
+	http = require('http').createServer(),
+	io = require('socket.io').listen(http),
+    osc = require(__dirname + '/../lib/socket.osc.js');
+
+http.listen(http_port);
+
+osc.listen(io, {
+	inbound_port: inbound_osc_port,
+	outbound_port: outbound_osc_port,
+	outbound_host: outbound_osc_host
+});
