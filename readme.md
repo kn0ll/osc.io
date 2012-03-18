@@ -3,7 +3,7 @@ socket.osc
 
 intention
 ---
-socket.osc allows you to communicate with other open sound control devices a server or client, from inside the browser via nodejs.
+socket.osc allows you to communicate with other open sound control devices as a server or client, from inside the browser via nodejs.
 
 installation
 ---
