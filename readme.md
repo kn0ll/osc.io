@@ -3,7 +3,7 @@ socket.osc
 
 intention
 ---
-socket.osc is a library and stand alone node.js utility to forward OSC messages to the browser via socket.io.
+socket.osc allows you to communicate with other osc devices a server or client, from inside the browser via nodejs.
 
 installation
 ---
