@@ -3,7 +3,7 @@ socket.osc
 
 intention
 ---
-socket.osc allows you to communicate with other osc devices a server or client, from inside the browser via nodejs.
+socket.osc allows you to communicate with other open sound control devices a server or client, from inside the browser via nodejs.
 
 installation
 ---
@@ -30,7 +30,7 @@ and create some sockets:
 
     // create a server which listens for inbound messages
     var osc_server = new osc.UdpReceiver(8888);
-    osc.on('/key2', function(msg) {
+    osc_server.on('/key2', function(msg) {
         console.log(msg);
     });
 
