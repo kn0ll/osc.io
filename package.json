@@ -12,5 +12,5 @@
 		"omgosc": "0.1.0"
 	},
 	"main": "./lib/osc.io",
-	"version": "0.0.1"
+	"version": "0.0.2"
 }
