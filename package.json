@@ -11,6 +11,6 @@
 		"colors": "0.6.0",
 		"omgosc": "0.1.0"
 	},
-	"main": "./lib/socket.osc",
+	"main": "./lib/osc.io",
 	"version": "0.0.1"
 }

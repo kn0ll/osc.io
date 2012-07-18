@@ -2,7 +2,7 @@
 
 var connect = require('connect'),
   socketio = require('socket.io'),
-  osc = require(__dirname + '/../../lib/socket.osc');
+  osc = require('osc.io');
 
 var server = connect.createServer(),
   io = socketio.listen(server);
