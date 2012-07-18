@@ -1,0 +1,12 @@
+#!/usr/bin/env node
+
+var connect = require('connect'),
+  socketio = require('socket.io'),
+  osc = require(__dirname + '/../../lib/socket.osc');
+
+var server = connect.createServer(),
+  io = socketio.listen(server);
+
+server.use(osc(io));
+server.use(connect.static(__dirname + "/../public"));
+server.listen(9000);

@@ -1,17 +1,16 @@
 {
+	"name": "osc.io",
 	"author": "catshirt <caden@catshirt.org>",
-	"name": "socket.osc",
-	"version": "0.0.3",
-	"url": "http://github.com/catshirt/socket.osc",
-	"description": "simple two way socket.io proxy for OSC messages",
+	"description": "send and receive OSC messages in the browser",
 	"keywords": ["open sound control", "socket.io", "osc"],
+	"repository": {
+		"type": "git",
+		"url": "http://github.com/catshirt/osc.io.git"
+	},
 	"dependencies": {
 		"colors": "0.6.0",
-		"omgosc": "0.1.0",
-		"socket.io": "0.9.0"
+		"omgosc": "0.1.0"
 	},
-	"bin": {
-		"socket.osc": "./bin/socket.osc"
-	},
-	"main": "./lib/socket.osc"
+	"main": "./lib/socket.osc",
+	"version": "0.0.1"
 }
