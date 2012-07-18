@@ -1,4 +1,4 @@
-midi.io
+osc.io
 ===
 an osc library for the web browser built on nodejs.
 
