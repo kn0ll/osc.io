@@ -1,12 +1,8 @@
-/*
+// # osc.io.js
+// a client library used for accessing osc.io apis.
 
-osc server
-var server = new OscServer({ port: 8080, host: '127.0.0.1' });
-server.on('osc', function(msg) { console.log(msg.path, msg.params); });
-server.on('/specific/path', function(params) { console.log(params); });
-
-*/
-
+// `OscServer` is a backbone model responsible
+// for listening for osc messages from on a specific port.
 var OscServer = Backbone.Model.extend({
 
 	urlRoot: '/osc/servers',
@@ -32,14 +28,8 @@ var OscServer = Backbone.Model.extend({
 
 }, Backbone.Events);
 
-/*
-
-osc client
-var client = new OscClient({ port: 8080 });
-server.on('osc', function(msg) { console.log(msg); });
-
-*/
-
+// `OscClient` is a backbone model responsible
+// for broadcasting osc messages to a specific port and host.
 var OscClient = Backbone.Model.extend({
 
 	urlRoot: '/osc/clients',
