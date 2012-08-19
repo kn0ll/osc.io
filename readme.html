@@ -1,0 +1,63 @@
+<!DOCTYPE html><html lang="en"><head><title>readme</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content=""><meta name="groc-document-path" content="readme"><meta name="groc-project-path" content="readme.md"><meta name="groc-github-url" content="https://github.com/catshirt/catshirt"><link rel="stylesheet" type="text/css" media="all" href="assets/style.css"><script type="text/javascript" src="assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/catshirt/catshirt/blob/master/readme.md">readme.md</a></div></div><div id="document"><div class="segment"><div class="comments"><div class="wrapper"><h1 id="oscio">osc.io</h1>
+
+<p>an osc library that allows reception and transmission of osc messages from the browser. it is a nodejs middleware which listens for midi input on and forwards the midi message to the client via socket.io.</p>
+
+<h2 id="installation">installation</h2>
+
+<pre><code>$ npm install osc.io  
+</code></pre>
+
+<h2 id="use">use</h2>
+
+<p>osc.io is responsible creatting http and websocket routes your client can use to send and receive osc messages from. a full <a href="https://github.com/catshirt/midi.io/tree/master/example">client and server example</a> is contained in the repository for reference.</p>
+
+<p>a basic osc.io server creates the following resources:</p>
+
+<p><code>WS /osc/servers</code> - a socket.io namespace to create and listen to osc servers
+<code>WS /osc/clients</code> - a socket.io namespace to create and broadcast as an osc client</p>
+
+<h2 id="getting-started-server">getting started (server)</h2>
+
+<p>to enable osc.io, simply pass it into your http server as a middleware, with your socket.io instance as it's first argument. the following example is the complete code for a simple osc.io server:</p>
+
+<pre><code>var connect = require('connect'),
+  socketio = require('socket.io'),
+  osc = require('osc.io');
+
+var server = connect.createServer(),
+  io = socketio.listen(server);
+
+server.use(osc(io));
+server.listen(9000);
+</code></pre>
+
+<h2 id="getting-started-client">getting started (client)</h2>
+
+<p>the osc.io client library is served via <code>/osc.io/osc.io.js</code> and requires backbone. it creates two backbone models- one used to send, and one used to receive osc messages.</p>
+
+<ul>
+<li><code>OscServer</code> - a backbone model which listens for incoming OSC messages</li>
+<li><code>OscClient</code> - a backbone model capable of sending outgoing OSC messages</li>
+</ul>
+
+<p>the following code shows the client library in action. it creates an osc client, an osc server, and has them communicate directly. it's important to note in this example, the client and server connect to eachother. you can override the host and port, however.</p>
+
+<pre><code>var client = new OscClient(),
+  server = new OscServer();
+
+server.on('osc', function(msg) {
+  console.log(msg.path, msg.params);
+});
+
+setInterval(function() {
+  client.trigger('osc', '/io/test', 20);
+}, 1000);
+</code></pre>
+
+<h2 id="building-documentation">building documentation</h2>
+
+<p><a href="http://catshirt.github.com/osc.io">formatted documentation</a> is available and can be built using groc:</p>
+
+<pre><code>npm install -g groc
+groc lib/**/*.js src/**/*.js readme.md
+</code></pre></div></div></div></div></body></html>
