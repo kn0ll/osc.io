@@ -52,10 +52,32 @@ var OscClient = Backbone.Model.extend({
 	},
 
 	sendOsc: function(path, param) {
+		// first, we need to determine the type of argument(s)
+		var typetag = '';
+		var args = Array.prototype.slice.call(arguments, 1);
+		var i;
+		
+		// TODO where is a function like this supposed to go in idiomatic backbone?
+		var oscType = function( o ) {
+			var t = typeof(o);
+			if ( t === 'string' ) {
+				return 's';
+			} else if ( t === 'number' ) {
+				if ( o === Math.floor(o)) {
+					return 'i';
+				} else {
+					return 'f';
+				}
+			}
+		}
+		
+		for ( i = 0; i < args.length; ++i ) {
+			typetag += oscType(args[i]);
+		}
 		this.socket.emit('osc', {
 			path: path,
-			typetag: 'f',
-			params: [param]
+			typetag: typetag,
+			params: args
 		});
 	}
 
