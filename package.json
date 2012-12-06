@@ -9,7 +9,7 @@
 	},
 	"dependencies": {
 		"colors": "0.6.0",
-		"omgosc": "0.1.0"
+		"omgosc": "0.1.1"
 	},
 	"main": "./lib/osc.io",
 	"version": "0.0.2"
