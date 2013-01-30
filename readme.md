@@ -50,4 +50,4 @@ client.emit('set-host', DEVICE_IP);
 
 - to enable multiple clients and servers, port must be passed in through the socket namespace to ensure each device has a unique client socket (socket.io creates only one socket per namespace). host cannot be passed in like port, since socket.io does not allow for variable namespace names. this makes creating a graceful connection api difficult. a proper api for managing device hosts and ports would be nice.
 
-- with socket.io lacking variable namespaces, i decided to create hannel name handlers only for ports 6000 - 12000 because i am afraid to see what happens if i create 6*x,xxx* channels. ideally, i'd like to handle truly variable port values.
+- with socket.io lacking variable namespaces, i decided to create hannel name handlers only for ports 6000 - 12000 because i am afraid to see what happens if i create 6x,xxx channels. ideally, i'd like to handle truly variable port values.
