@@ -1,61 +1,53 @@
 # osc.io
 
-an osc library that allows reception and transmission of osc messages from the browser. it is a nodejs middleware which listens for midi input on and forwards the midi message to the client via socket.io.
+osc.io proxies osc messages from standard sockets to the browser using socket.io.
 
 ## installation
 
-    $ npm install osc.io  
+```
+$ npm install osc.io
+```
 
-## use
+## configuration
 
-osc.io is responsible creatting http and websocket routes your client can use to send and receive osc messages from. a full [client and server example](https://github.com/catshirt/midi.io/tree/master/example) is contained in the repository for reference.
-
-a basic osc.io server creates the following resources:
-
-`WS /osc/servers` - a socket.io namespace to create and listen to osc servers
-`WS /osc/clients` - a socket.io namespace to create and broadcast as an osc client
-
-## getting started (server)
-
-to enable osc.io, simply pass it into your http server as a middleware, with your socket.io instance as it's first argument. the following example is the complete code for a simple osc.io server:
+to expose the proper endpoints from the server, you must pass your socket.io instance to osc.io.
 
 ```
-var connect = require('connect'),
+var http = require('http'),
   socketio = require('socket.io'),
-  osc = require('osc.io');
-
-var server = connect.createServer(),
+  osc = require('osc.io'),
+  server = http.createServer(),
   io = socketio.listen(server);
 
-server.use(osc(io));
-server.listen(9000);
+osc(io);
+server.listen(80);
 ```
 
-## getting started (client)
+this will create two socket.io namespaces, `/osc/servers/:port` and `/osc/clients/:port`, to manage osc servers and osc clients respectively. possible port values are restricted to `6000` to `12000`. each namespace can listen or emit `message` events to receive and send osc messages.
 
-the osc.io client library is served via `/osc.io/osc.io.js` and requires backbone. it creates two backbone models- one used to send, and one used to receive osc messages.
-
-- `OscServer` - a backbone model which listens for incoming OSC messages
-- `OscClient` - a backbone model capable of sending outgoing OSC messages
-
-the following code shows the client library in action. it creates an osc client, an osc server, and has them communicate directly. it's important to note in this example, the client and server connect to eachother. you can override the host and port, however.
+in the example below, we create an osc client/server in the browser and send messages from one to the other. of course, the client or server could be any osc device.
 
 ```
-var client = new OscClient(),
-  server = new OscServer();
+var server = io.connect('http://localhost/osc/servers/8000'),
+  client = io.connect('http://localhost/osc/clients/8000');
 
-server.on('osc', function(msg) {
-  console.log(msg.path, msg.params);
+server.on('message', function(message) {
+  console.log(message);
 });
 
 setInterval(function() {
-  client.trigger('osc', '/io/test', 20);
-}, 1000);
+  client.emit('message', ['/osc/test', 200]);
+}, 500);
 ```
 
-## building documentation
+by default, client devices broadcast to 127.0.0.1. to modify the host value of a client, your client must emit a message containing the host.
 
-[formatted documentation](http://catshirt.github.com/osc.io) is available and can be built using groc:
+```
+client.emit('set-host', DEVICE_IP);
+```
 
-    npm install -g groc
-    groc lib/**/*.js src/**/*.js readme.md
+## todo
+
+- to enable multiple clients and servers, port must be passed in through the socket namespace to ensure each device has a unique client socket (socket.io creates only one socket per namespace). host cannot be passed in like port, since socket.io does not allow for variable namespace names. this makes creating a graceful connection api difficult. a proper api for managing device hosts and ports would be nice.
+
+- with socket.io lacking variable namespaces, i decided to create hannel name handlers only for ports 6000 - 12000 because i am afraid to see what happens if i create 6*x,xxx* channels. ideally, i'd like to handle truly variable port values.
